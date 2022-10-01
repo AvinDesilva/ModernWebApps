@@ -56,8 +56,8 @@ def render_main_page(persona, specific_message=''):
 
     if persona == "learner":
         persona_specific_entities = signed_up_students
-        persona_specific_my_lessons = "TODO"
-        persona_specific_banner = 'TODO'
+        persona_specific_my_lessons = "Registered lessons"
+        persona_specific_banner = 'Some lesson'
         search_display_style = 'display: block;'
         signups_style = 'display: none;'
         offer_lesson_or_search = "Search";
@@ -67,7 +67,7 @@ def render_main_page(persona, specific_message=''):
         persona_specific_entities = lessons
         persona_specific_my_lessons = "Registered teachers"
         persona_specific_banner = 'Teach Music'
-        search_display_style = 'TODO'
+        search_display_style = 'display: block;'
         signups_style = 'display: block;'
         offer_lesson_or_search = "Offer Lesson";
         offer_lesson_or_search_handler = "take_input()";
@@ -84,7 +84,7 @@ def render_main_page(persona, specific_message=''):
 
 
 @app.route("/register_lesson", methods=['POST'])
-def register_lesson():
+def register_lesson123():
     app.logger.info("Inside register_lesson")
     lesson_name = request.form['lesson-name-input']
     instrument = request.form['instrument-list-select']
@@ -92,7 +92,7 @@ def register_lesson():
     days_of_the_week = request.form.getlist('day_of_the_week')
     demo_url = request.form['demo-url']
     # TODO: Parse instructor_name from the form
-    instructor_name = "INSTRUCTOR_NAME"
+    instructor_name = request.form['instructor-name-input']
 
     days_of_the_week_string = ','.join(days_of_the_week)
 
@@ -112,8 +112,9 @@ def register_lesson():
     lessons.append(lesson)
 
     persona = "teacher"
+    
 
-    registered_message = "TODO"     # TODO
+    registered_message = lesson_name + " registered."
     return render_main_page(persona, specific_message=registered_message)
 
 
@@ -126,13 +127,21 @@ def get_signups():
 
 
 # TODO: Complete search_lesson
-@app.route("/searchlessons")
+@app.route("/searchlessons", methods={'POST'})
 def search_lesson():
+    search_content = request.form["search_content"]
     app.logger.info("Inside search_lesson")
+    ret_obj = []
+    app.logger.info(search_content)
+    print(search_content)
+    print("print that we hit!", lessons)
+    for lesson in lessons:
+        if lesson["instrument"]:
+            if lesson["instrument"] == search_content:
+                
+                ret_obj.append(lesson)
 
-    ret_obj = {}
-    ret_obj['lessons'] = "TODO: Return searched Lessons."
-    return ret_obj
+    return {"lessons" : ret_obj}
 
 
 # TODO: Complete signup functionality
@@ -140,8 +149,8 @@ def search_lesson():
 def signup():
     app.logger.info("Inside signup")
 
-    learner_name = "TODO: Parse learner_name from signup form"
-    lesson_name = "TODO: Parse lesson_name from signup form"
+    learner_name = request.form['learner-name-input']
+    lesson_name = request.form['lesson-name-input']
 
     app.logger.info("Learner name:%s Lesson name:%s", learner_name, lesson_name)
 
@@ -153,7 +162,7 @@ def signup():
 
     persona = "learner"
 
-    registered_message = "TODO"     # TODO
+    registered_message = lesson_name + " registered."
     return render_main_page(persona, specific_message=registered_message)
 
 
@@ -167,7 +176,7 @@ def login123():
     persona = request.form['persona-selector']
 
     if persona == 'learner':
-        persona_specific_message = "TODO" # TODO - Add learner specific message
+        persona_specific_message = 'learner persona message'
     if persona == 'teacher':
         persona_specific_message = 'Share your musical knowledge with others.'
 

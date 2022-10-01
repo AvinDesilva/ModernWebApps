@@ -27,9 +27,13 @@
 
         <div id="take-input" style="display:none;">
           <!-- TODO: Hookup the form with register_lesson with method post -->
-          <form>
+          <form action="register_lesson" method="post" class="form-signin">
           <table style="padding-top: 20px; padding-left: 200px">
-            <!-- TODO: Add Instructor Name label and a text box to input instructor name --> 
+            <!-- TODO: Add Instructor Name label and a text box to input instructor name -->
+            <tr>
+              <td><label class="label">Instructor Name</label></td>
+              <td><input class="input" type="text" name="instructor-name-input" id="instructor-name-input"></input></td>
+            </tr>
             <tr>
               <td><label class="label">Lesson Name</label></td>
               <td><input class="input" type="text" name="lesson-name-input" id="lesson-name-input"></input></td>

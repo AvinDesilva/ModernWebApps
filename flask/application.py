@@ -40,6 +40,7 @@ app = Flask(__name__)
 # Globals
 lessons = []
 lesson1 = {}
+lesson1['instructor_name'] = "Instructor1"
 lesson1['name'] = "Guitar1"
 lesson1['instrument'] = "Guitar"
 lesson1["demo_url"] = "https://abc.com"
@@ -47,6 +48,7 @@ lesson1["days"] = "MW"
 lesson1["timings"] = "3:30 - 4.00"
 
 lesson2 = {}
+lesson2['instructor_name'] = "Instructor2"
 lesson2['name'] = "Guitar2"
 lesson2['instrument'] = "Guitar"
 lesson2["demo_url"] = "https://def.com"
@@ -54,6 +56,7 @@ lesson2["days"] = "TTh"
 lesson2["timings"] = "3:30 - 4.00"
 
 lesson3 = {}
+lesson3['instructor_name'] = "Instructor3"
 lesson3['name'] = "Piano1"
 lesson3['instrument'] = "Piano"
 lesson3["demo_url"] = "https://pia.no"
@@ -65,6 +68,8 @@ lessons.append(lesson2)
 lessons.append(lesson3)
 
 signed_up_students = []
+
+registered_lessons = []
 
 
 @app.errorhandler(404)
@@ -92,16 +97,57 @@ def get_lessons():
     app.logger.info("Inside get_lessons")
     time.sleep(10)
     ret_obj = {}
-    if 'instrument' in request.args:
-        instrument = request.args.get('instrument').strip().lower()
-        lessons_to_ret = []
-        for lesson in lessons:
-            if instrument in lesson['instrument'].lower():
-                lessons_to_ret.append(lesson)
-    else:
-        lessons_to_ret = lessons
-    ret_obj['lessons'] = lessons_to_ret
+    # if 'instrument' in request.args:
+    #     instrument = request.args.get('instrument').strip().lower()
+    #     lessons_to_ret = []
+    #     for lesson in lessons:
+    #         if instrument in lesson['instrument'].lower():
+    #             lessons_to_ret.append(lesson)
+    # else:
+    #     lessons_to_ret = lessons
+    # ret_obj['lessons'] = lessons_to_ret
     return ret_obj
+
+@app.route("/registerlessons")
+def register_lessons():
+    app.logger.info("Inside register_lessons")
+    time.sleep(10)
+    lesson_obj = {}
+    # if 'instructor_name' in request.args:
+    #     instructor_name = request.args.get('instructor_name').strip().lower()
+    #     lesson_obj["instructor_name"] = instructor_name
+
+    # if 'lesson_name' in request.args:
+    #     name = request.args.get('lesson_name').strip().lower()
+    #     lesson_obj["name"] = name
+
+    # if 'instrument' in request.args:
+    #     instrument = request.args.get('instrument').strip().lower()
+    #     lesson_obj["instrument"] = instrument
+    
+    # if 'demo_url' in request.args:
+    #     demo_url = request.args.get('demo_url').strip().lower()
+    #     lesson_obj["demo_url"] = demo_url
+
+    # if 'days' in request.args:
+    #     days_of_week = request.args.get('days').strip().lower()
+    #     lesson_obj["days"] = days_of_week
+
+    # if 'timings' in request.args:
+    #     timings = request.args.get('timings').strip().lower()
+    #     lesson_obj["timings"] = timings
+    lesson4 = {}
+    lesson4['instructor_name'] = "Instructor3"
+    lesson4['name'] = "Piano1"
+    lesson4['instrument'] = "Piano"
+    lesson4["demo_url"] = "https://pia.no"
+    lesson4["days"] = "TTh"
+    lesson4["timings"] = "3:30 - 4.00"
+
+    lessons.append(lesson4)
+    return lesson4
+
+
 
 
 @app.route("/lessons/<lesson_name>")
